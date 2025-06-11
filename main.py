@@ -5,13 +5,17 @@ import json
 import time
 import os
 
-def setup_solver(): 
-    if not os.path.exists("utils"): os.mkdir("utils")
+def setup_solver():
+    if not os.path.exists("utils"):
+        os.mkdir("utils")
     files = ["https://raw.githubusercontent.com/Body-Alhoha/turnaround/main/utils/solver.py", "https://raw.githubusercontent.com/Body-Alhoha/turnaround/main/utils/page.html"]
     for file in files:
         r = requests.get(file).text
         with open("utils/" + file.split("/")[-1], "w") as f:
             f.write(r)
+
+# 强制安装 Playwright 浏览器
+os.system("python -m playwright install")
 
 setup_solver()
 app = flask.Flask(__name__)
@@ -43,5 +47,5 @@ def make_response(captcha_key):
     return flask.jsonify({"status": "success", "token": captcha_key})
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))  # 获取环境变量 PORT 的值，如果不存在则使用默认端口 5000
+    port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
