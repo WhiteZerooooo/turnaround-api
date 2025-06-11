@@ -5,7 +5,7 @@ import json
 import time
 import os
 
-def setup_solver(): #please body dont sue me
+def setup_solver(): 
     if not os.path.exists("utils"): os.mkdir("utils")
     files = ["https://raw.githubusercontent.com/Body-Alhoha/turnaround/main/utils/solver.py", "https://raw.githubusercontent.com/Body-Alhoha/turnaround/main/utils/page.html"]
     for file in files:
@@ -43,4 +43,5 @@ def make_response(captcha_key):
     return flask.jsonify({"status": "success", "token": captcha_key})
 
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 5000))  # 获取环境变量 PORT 的值，如果不存在则使用默认端口 5000
+    app.run(host='0.0.0.0', port=port)
